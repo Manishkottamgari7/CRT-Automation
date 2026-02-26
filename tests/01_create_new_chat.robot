@@ -2,8 +2,8 @@
 Documentation     TC-01: Verify that a user can create a new chat session
 ...               on the Copado AI Platform.
 Resource          ../resources/common.resource
+Suite Setup       OpenBrowser    about:blank    chrome
 Suite Teardown    Close Test Session
-Suite Setup        OpenBrowser    about:blank   chrome
 
 *** Test Cases ***
 Create A New Chat Session
@@ -11,17 +11,16 @@ Create A New Chat Session
     ...                click Create New Chat, and verify the chat opens.
     [Tags]    smoke    chat    critical
 
-    # Step 1 – Full login flow (login → AI platform → workspace)
+    # Step 1 – Login and navigate to AI Platform workspace
     Full Login Flow
 
     # Step 2 – Click "Create new chat" in the sidebar
-    ClickText    Create new chat
+    ClickText         Create new chat
     Sleep    3s
 
     # Step 3 – Verify the new chat session is created
-    # A new chat entry should appear in the sidebar
-    VerifyText    New Chat
+    VerifyText        New Chat
 
-    # Step 4 – Verify the prompt area is present
-    VerifyElement    id\=ai-prompt-send
+    # Step 4 – Verify the send button is present (prompt area loaded)
+    ClickElement      /html[1]/body[1]/ai-root[1]/ai-workspace[1]/div[1]/div[1]/ai-chat-page[1]/div[2]/div[1]/ai-new-chat[1]/div[1]/div[2]/ai-chat-input[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[1]/div[2]/div[2]/button[1]
     Log    ✅ New chat session created successfully.

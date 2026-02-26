@@ -2,6 +2,7 @@
 Documentation     TC-02: Verify that a user can type a prompt in a chat
 ...               and receive a valid AI response from the Copado AI Platform.
 Resource          ../resources/common.resource
+Suite Setup       OpenBrowser    about:blank    chrome
 Suite Teardown    Close Test Session
 
 *** Variables ***
@@ -16,20 +17,19 @@ Submit A Prompt And Receive A Response
     Full Login Flow
 
     # Step 2 – Create a new chat
-    ClickText    Create new chat
+    ClickText         Create new chat
     Sleep    3s
 
     # Step 3 – Type the prompt into the chat input area
-    # The chat input is a contenteditable div, use ClickElement + TypeText
-    ClickElement    xpath\=//div[@contenteditable\='true']
-    TypeText    xpath\=//div[@contenteditable\='true']    ${TEST_PROMPT}
+    ClickElement      /html[1]/body[1]/ai-root[1]/ai-workspace[1]/div[1]/div[1]/ai-chat-page[1]/div[2]/div[1]/ai-new-chat[1]/div[1]/div[2]/ai-chat-input[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[1]/div[1]
+    Sleep    1s
+    TypeText          ${TEST_PROMPT}
 
     # Step 4 – Click the send button
-    ClickElement    id\=ai-prompt-send
-    Sleep    10s    reason=Waiting for AI response
+    ClickElement      /html[1]/body[1]/ai-root[1]/ai-workspace[1]/div[1]/div[1]/ai-chat-page[1]/div[2]/div[1]/ai-new-chat[1]/div[1]/div[2]/ai-chat-input[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[1]/div[2]/div[2]/button[1]
+    Sleep    10s
 
-    # Step 5 – Verify the AI started responding
-    # The chat area changes to show messages
+    # Step 5 – Verify the AI responded
     Verify AI Response Received    Copado    timeout=60s
 
     # Step 6 – Log success

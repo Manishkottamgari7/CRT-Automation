@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation     Copado CI/CD integration setup test for Copado AI Platform.
 Resource          ../resources/common.resource
+Suite Setup       OpenBrowser    about:blank    chrome
 Suite Teardown    Close Test Session
 
 *** Test Cases ***

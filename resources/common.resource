@@ -9,45 +9,36 @@ ${WORKSPACE_NAME}     My Workspace
 
 *** Keywords ***
 Open Copado And Login
-    [Documentation]    Open browser, navigate to login page, and enter credentials.
-    OpenBrowser    ${BASE_URL}    ${BROWSER}
-    VerifyText    Log in to Copado
-    TypeText    Email    ${COPADO_USERNAME}
-    TypeText    Password    ${COPADO_PASSWORD}
-    ClickText    LOGIN
-    # After login we land on CRT dashboard
+    [Documentation]    Navigate to login page and enter credentials.
+    GoTo              ${BASE_URL}
+    VerifyText        Log in to Copado
+    TypeText          Email             ${COPADO_USERNAME}
+    TypeSecret        Password          ${COPADO_PASSWORD}
+    ClickText         LOGIN
     Sleep    5s
 
 Navigate To AI Platform
     [Documentation]    Navigate to Copado AI Platform via app switcher.
-    
-    # Wait for page to fully load after login
     Sleep    3s
-    
-    # Click the app switcher button using its ID
+    # Click the app switcher button
     ClickElement      /html[1]/body[1]/app-root[1]/ng-component[1]/div[1]/div[1]/app-sidebar[1]/div[1]/div[1]/div[1]/cds-app-switcher[1]/div[1]/button[1]
     Sleep    2s
-    
     # Click on Copado AI Platform link
-    ClickText    Copado AI Platform    timeout=10s
+    ClickText         Copado AI Platform    timeout=10s
     Sleep    5s
-    
-    # Switch to new tab if it opened
-    ${windows}=    GetWindowHandles
-    ${count}=    Get Length    ${windows}
-    Run Keyword If    ${count} > 1    SwitchWindow    NEW
+    # Switch to the new tab
+    SwitchWindow      NEW
     Sleep    2s
-    
     # Verify we're on the AI Platform
-    VerifyText    Workspaces    timeout=20s
+    VerifyText        Workspaces    timeout=20s
 
 Select Workspace
     [Arguments]    ${workspace}=${WORKSPACE_NAME}
     [Documentation]    Click a workspace card on the AI Platform home page.
-    VerifyText    Workspaces
-    ClickText    ${workspace}
+    VerifyText        Workspaces
+    ClickText         ${workspace}
     Sleep    3s
-    VerifyText    Create new chat
+    VerifyText        Create new chat
 
 Full Login Flow
     [Documentation]    Login → navigate to AI Platform → select workspace.
@@ -57,7 +48,7 @@ Full Login Flow
 
 Navigate To My Integrations
     [Documentation]    Click "My Integrations" in the top navigation bar.
-    ClickText    My Integrations
+    ClickText         My Integrations
     Sleep    3s
 
 Close Test Session
@@ -68,6 +59,9 @@ Verify AI Response Received
     [Arguments]    ${expected_text}    ${timeout}=60s
     [Documentation]    Wait for AI response and verify it contains expected text.
     ${response_visible}=    Run Keyword And Return Status    VerifyText    ${expected_text}    timeout=${timeout}
-    Run Keyword If    ${response_visible}    Log    ✅ AI response received with text: ${expected_text}
-    ...    ELSE    Fail    ❌ AI did not respond with expected text within ${timeout}
-    [Return]    ${response_visible}
+    IF    ${response_visible}
+        Log    ✅ AI response received with text: ${expected_text}
+    ELSE
+        Fail    ❌ AI did not respond with expected text within ${timeout}
+    END
+    RETURN    ${response_visible}
