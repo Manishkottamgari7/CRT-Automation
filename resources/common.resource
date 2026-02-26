@@ -19,69 +19,32 @@ Open Copado And Login
     Sleep    5s
 
 Navigate To AI Platform
-    [Documentation]    Debug version - navigate to AI Platform with detailed logging.
+    [Documentation]    Navigate to Copado AI Platform after login.
     
-    Log    🔍 Starting navigation to AI Platform...
+    # Wait for page to fully load after login
+    Sleep    3s
     
-    # Capture current state
-    ${start_url}=    GetUrl
-    Log    Current URL: ${start_url}
-    CaptureScreenshot    01_after_login.png
+    # Click app launcher - try multiple selectors
+    ${clicked}=    Run Keyword And Return Status    ClickElement    xpath=//button[@title='App Launcher']
+    Run Keyword Unless    ${clicked}    ClickElement    xpath=//div[@class='slds-icon-waffle']
+    Sleep    2s
     
-    # Try to find app switcher
-    Log    🔍 Looking for app switcher...
-    ${switcher_exists}=    IsElement    xpath\=//button[contains(@class, 'app-switcher')]    timeout=5s
-    Log    App switcher found: ${switcher_exists}
+    # Search for Copado AI in the app launcher
+    TypeText    Search apps and items...    Copado AI
+    Sleep    1s
     
-    Run Keyword If    ${switcher_exists}
-    ...    Run Keywords
-    ...    Log    ✅ App switcher found, clicking...
-    ...    AND    ClickElement    xpath\=//button[contains(@class, 'app-switcher')]
-    ...    AND    Sleep    2s
-    ...    AND    CaptureScreenshot    02_app_switcher_opened.png
-    ...    ELSE
-    ...    Log    ❌ App switcher not found, trying direct navigation...
+    # Click on Copado AI Platform
+    ClickText    Copado AI Platform
+    Sleep    5s
     
-    # Look for AI Platform link
-    Log    🔍 Looking for 'Copado AI Platform' text...
-    ${ai_link_exists}=    IsText    Copado AI Platform    timeout=5s
-    Log    AI Platform link found: ${ai_link_exists}
-    
-    Run Keyword If    ${ai_link_exists}
-    ...    Run Keywords
-    ...    Log    ✅ AI Platform link found, clicking...
-    ...    AND    ClickText    Copado AI Platform
-    ...    AND    Sleep    5s
-    ...    AND    CaptureScreenshot    03_after_clicking_ai.png
-    ...    ELSE
-    ...    Run Keywords
-    ...    Log    ❌ AI Platform link not found, using direct URL...
-    ...    AND    GoTo    https://ai.copado.com
-    ...    AND    Sleep    5s
-    
-    # Check if new window opened
+    # Switch to new tab if it opened
     ${windows}=    GetWindowHandles
-    ${window_count}=    Get Length    ${windows}
-    Log    Number of windows: ${window_count}
+    ${count}=    Get Length    ${windows}
+    Run Keyword If    ${count} > 1    SwitchWindow    NEW
+    Sleep    2s
     
-    Run Keyword If    ${window_count} > 1
-    ...    Run Keywords
-    ...    Log    ✅ New window detected, switching...
-    ...    AND    SwitchWindow    NEW
-    ...    AND    Sleep    3s
-    ...    AND    CaptureScreenshot    04_new_window.png
-    
-    # Verify final state
-    ${final_url}=    GetUrl
-    Log    Final URL: ${final_url}
-    CaptureScreenshot    05_final_state.png
-    
-    # Verify we're on AI Platform
-    ${on_ai_platform}=    IsText    Workspaces    timeout=10s
-    Run Keyword If    ${on_ai_platform}
-    ...    Log    ✅ Successfully on AI Platform!
-    ...    ELSE
-    ...    Fail    ❌ Failed to navigate to AI Platform. Check screenshots in results folder.
+    # Verify we're on the AI Platform
+    VerifyText    Workspaces    timeout=20s
 
 Select Workspace
     [Arguments]    ${workspace}=${WORKSPACE_NAME}
