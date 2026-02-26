@@ -25,7 +25,7 @@ Navigate To AI Platform
     Sleep    3s
     
     # Click the app switcher button using its ID
-    ClickElement    id=app-switcher
+    ClickElement      /html[1]/body[1]/app-root[1]/ng-component[1]/div[1]/div[1]/app-sidebar[1]/div[1]/div[1]/div[1]/cds-app-switcher[1]/div[1]/button[1]
     Sleep    2s
     
     # Click on Copado AI Platform link
