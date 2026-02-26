@@ -1,0 +1,52 @@
+*** Settings ***
+Documentation     Shared keywords for the Copado AI Platform CRT test suite.
+...               Uses QWeb library (QWords) for text-based element interaction.
+Library           QWeb
+Variables         ../variables/env.py
+
+*** Variables ***
+${WORKSPACE_NAME}     My Workspace
+
+*** Keywords ***
+Open Copado And Login
+    [Documentation]    Open browser, navigate to login page, and enter credentials.
+    OpenBrowser    ${BASE_URL}    ${BROWSER}
+    VerifyText    Log in to Copado
+    TypeText    Email    ${COPADO_USERNAME}
+    TypeText    Password    ${COPADO_PASSWORD}
+    ClickText    LOGIN
+    # After login we land on CRT dashboard
+    Sleep    5s
+
+Navigate To AI Platform
+    [Documentation]    Switch to Copado AI Platform via app switcher or direct URL.
+    # Click the app switcher grid icon
+    ClickElement    id\=app-switcher
+    Sleep    2s
+    ClickText    Copado AI Platform
+    Sleep    5s
+    # Switch to the newly opened tab
+    SwitchWindow    NEW
+
+Select Workspace
+    [Arguments]    ${workspace}=${WORKSPACE_NAME}
+    [Documentation]    Click a workspace card on the AI Platform home page.
+    VerifyText    Workspaces
+    ClickText    ${workspace}
+    Sleep    3s
+    VerifyText    Create new chat
+
+Full Login Flow
+    [Documentation]    Login → navigate to AI Platform → select workspace.
+    Open Copado And Login
+    Navigate To AI Platform
+    Select Workspace
+
+Navigate To My Integrations
+    [Documentation]    Click "My Integrations" in the top navigation bar.
+    ClickText    My Integrations
+    Sleep    3s
+
+Close Test Session
+    [Documentation]    Close all browsers.
+    CloseAllBrowsers
