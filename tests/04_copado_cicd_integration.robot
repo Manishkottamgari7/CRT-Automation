@@ -1,29 +1,25 @@
 *** Settings ***
-Documentation     TC-04: Verify that a user can navigate to the Copado CI/CD
-...               integration setup on the Copado AI Platform.
+Documentation     Copado CI/CD integration setup test for Copado AI Platform.
 Resource          ../resources/common.resource
 Suite Teardown    Close Test Session
 
 *** Test Cases ***
 Setup Copado CICD Integration
-    [Documentation]    Login, navigate to My Integrations, locate the Copado CI/CD
-    ...                integration option, and initiate the connection.
-    [Tags]    integration    cicd    critical
-
-    # Step 1 – Full login flow
+    [Documentation]    Login, navigate to My Integrations, find Copado CI/CD, and click Connect.
+    ...                Verifies that the Copado CI/CD integration flow is initiated.
+    [Tags]    integration    copado-cicd    critical
+    
     Full Login Flow
-
-    # Step 2 – Navigate to My Integrations
     Navigate To My Integrations
-
-    # Step 3 – Verify we are on the integrations page
+    
+    # Verify we're on the integrations page
     VerifyText    Integrations
-
-    # Step 4 – Look for Copado CI/CD and click Connect
-    VerifyText    Copado
-    ClickText    Connect    anchor=Copado
+    VerifyText    Copado CI/CD
+    
+    # Click "Connect" button for Copado CI/CD
+    ClickText    Connect    anchor=Copado CI/CD
     Sleep    5s
-
-    # Step 5 – Verify the CI/CD integration flow opened
-    ${status}=    IsText    Copado    timeout=10
+    
+    # Verify integration flow started
+    ${status}=    IsText    Copado CI/CD    timeout=10
     Log    ✅ Copado CI/CD integration flow initiated. Status: ${status}

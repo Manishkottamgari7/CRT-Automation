@@ -1,29 +1,25 @@
 *** Settings ***
-Documentation     TC-03: Verify that a user can navigate to the Salesforce
-...               integration setup on the Copado AI Platform.
+Documentation     Salesforce org integration setup test for Copado AI Platform.
 Resource          ../resources/common.resource
 Suite Teardown    Close Test Session
 
 *** Test Cases ***
 Setup Salesforce Org Integration
-    [Documentation]    Login, navigate to My Integrations, locate the Salesforce
-    ...                integration option, and initiate the connection.
+    [Documentation]    Login, navigate to My Integrations, find Salesforce, and click Connect.
+    ...                Verifies that the Salesforce integration flow is initiated.
     [Tags]    integration    salesforce    critical
-
-    # Step 1 – Full login flow
+    
     Full Login Flow
-
-    # Step 2 – Navigate to My Integrations
     Navigate To My Integrations
-
-    # Step 3 – Verify we are on the integrations page
+    
+    # Verify we're on the integrations page
     VerifyText    Integrations
-
-    # Step 4 – Look for Salesforce and click Connect
     VerifyText    Salesforce
+    
+    # Click "Connect" button for Salesforce
     ClickText    Connect    anchor=Salesforce
     Sleep    5s
-
-    # Step 5 – Verify the Salesforce integration flow opened
+    
+    # Verify integration flow started
     ${status}=    IsText    Salesforce    timeout=10
     Log    ✅ Salesforce integration flow initiated. Status: ${status}

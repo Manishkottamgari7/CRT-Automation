@@ -5,7 +5,7 @@ Resource          ../resources/common.resource
 Suite Teardown    Close Test Session
 
 *** Variables ***
-${TEST_PROMPT}    What is Copado CI/CD?
+${TEST_PROMPT}    What is Copado Robotic Testing?
 
 *** Test Cases ***
 Submit A Prompt And Receive A Response
@@ -30,7 +30,7 @@ Submit A Prompt And Receive A Response
 
     # Step 5 – Verify the AI started responding
     # The chat area changes to show messages
-    VerifyText    Copado    timeout=60
+    Verify AI Response Received    Copado    timeout=60s
 
     # Step 6 – Log success
     Log    ✅ AI response received for prompt: ${TEST_PROMPT}

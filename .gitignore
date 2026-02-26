@@ -6,19 +6,23 @@ report.html
 screenshots/
 
 # Python
-__pycache__/
 *.pyc
+__pycache__/
 *.pyo
-.venv/
-venv/
+*.pyd
+.Python
 env/
+venv/
 
 # IDE
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log

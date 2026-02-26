@@ -50,3 +50,11 @@ Navigate To My Integrations
 Close Test Session
     [Documentation]    Close all browsers.
     CloseAllBrowsers
+
+Verify AI Response Received
+    [Arguments]    ${expected_text}    ${timeout}=60s
+    [Documentation]    Wait for AI response and verify it contains expected text.
+    ${response_visible}=    Run Keyword And Return Status    VerifyText    ${expected_text}    timeout=${timeout}
+    Run Keyword If    ${response_visible}    Log    ✅ AI response received with text: ${expected_text}
+    ...    ELSE    Fail    ❌ AI did not respond with expected text within ${timeout}
+    [Return]    ${response_visible}
