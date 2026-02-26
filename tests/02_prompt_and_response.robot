@@ -21,12 +21,12 @@ Submit A Prompt And Receive A Response
     Sleep    3s
 
     # Step 3 – Type the prompt into the chat input area
-    ClickElement      /html[1]/body[1]/ai-root[1]/ai-workspace[1]/div[1]/div[1]/ai-chat-page[1]/div[2]/div[1]/ai-new-chat[1]/div[1]/div[2]/ai-chat-input[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[1]/div[1]
+    ClickElement      //*[@contenteditable="true"]
     Sleep    1s
-    TypeText          ${TEST_PROMPT}
+    TypeText          //*[@contenteditable="true"]    ${TEST_PROMPT}
 
-    # Step 4 – Click the send button
-    ClickElement      /html[1]/body[1]/ai-root[1]/ai-workspace[1]/div[1]/div[1]/ai-chat-page[1]/div[2]/div[1]/ai-new-chat[1]/div[1]/div[2]/ai-chat-input[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[1]/div[2]/div[2]/button[1]
+    # Step 4 – Click the send button (alternative: PressKey ENTER)
+    ClickElement      //*[@id="ai-prompt-send"]
     Sleep    10s
 
     # Step 5 – Verify the AI responded

@@ -22,5 +22,5 @@ Create A New Chat Session
     VerifyText        New Chat
 
     # Step 4 – Verify the send button is present (prompt area loaded)
-    ClickElement      /html[1]/body[1]/ai-root[1]/ai-workspace[1]/div[1]/div[1]/ai-chat-page[1]/div[2]/div[1]/ai-new-chat[1]/div[1]/div[2]/ai-chat-input[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[1]/div[2]/div[2]/button[1]
+    Wait Until Keyword Succeeds    10s    2s    VerifyElement    //*[@id="ai-prompt-send"]
     Log    ✅ New chat session created successfully.
