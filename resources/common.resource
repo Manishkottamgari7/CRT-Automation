@@ -19,22 +19,17 @@ Open Copado And Login
     Sleep    5s
 
 Navigate To AI Platform
-    [Documentation]    Navigate to Copado AI Platform after login.
+    [Documentation]    Navigate to Copado AI Platform via app switcher.
     
     # Wait for page to fully load after login
     Sleep    3s
     
-    # Click app launcher - try multiple selectors
-    ${clicked}=    Run Keyword And Return Status    ClickElement    xpath=//button[@title='App Launcher']
-    Run Keyword Unless    ${clicked}    ClickElement    xpath=//div[@class='slds-icon-waffle']
+    # Click the app switcher button using its ID
+    ClickElement    id=app-switcher
     Sleep    2s
     
-    # Search for Copado AI in the app launcher
-    TypeText    Search apps and items...    Copado AI
-    Sleep    1s
-    
-    # Click on Copado AI Platform
-    ClickText    Copado AI Platform
+    # Click on Copado AI Platform link
+    ClickText    Copado AI Platform    timeout=10s
     Sleep    5s
     
     # Switch to new tab if it opened
