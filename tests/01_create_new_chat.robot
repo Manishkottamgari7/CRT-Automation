@@ -3,7 +3,7 @@ Documentation     TC-01: Verify that a user can create a new chat session
 ...               on the Copado AI Platform.
 Resource          ../resources/common.resource
 Suite Teardown    Close Test Session
-Suite Setup        OpenBrowser    about:blank    chrome
+Suite Setup        OpenBrowser    www.robotic.copado.com/login?mode=email    chrome
 
 *** Test Cases ***
 Create A New Chat Session
