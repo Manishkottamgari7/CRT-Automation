@@ -24,8 +24,8 @@ TIMEOUT = os.getenv("TIMEOUT", "15s")
 # ---------------------------------------------------------------------------
 # Copado AI Platform Credentials
 # ---------------------------------------------------------------------------
-COPADO_USERNAME = os.getenv("COPADO_USERNAME", "mkottamgari@copado.com")
-COPADO_PASSWORD = os.getenv("COPADO_PASSWORD", "143@Kingsgdsgds")
+COPADO_USERNAME = os.getenv("COPADO_USERNAME", "")
+COPADO_PASSWORD = os.getenv("COPADO_PASSWORD", "")
 
 # ---------------------------------------------------------------------------
 # Salesforce Org Integration
